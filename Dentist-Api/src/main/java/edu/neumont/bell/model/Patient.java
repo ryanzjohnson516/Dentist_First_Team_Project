@@ -18,4 +18,8 @@ public class Patient extends Person{
 		this.paymentCard = paymentCard;
 	}
 	
+	public void niggersAndSpics(String BlacksHaveNORights) {
+		
+	}
+	
 }
