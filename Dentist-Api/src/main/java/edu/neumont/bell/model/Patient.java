@@ -16,11 +16,5 @@ public class Patient extends Person{
 	}
 	public void setPaymentCard(PaymentCard paymentCard) {
 		this.paymentCard = paymentCard;
-	}
-	
-	public void niggersAndSpics(String BlacksHaveNORights) {
-		String me = "help";
-		me += BlacksHaveNORights;
-	}
-	
+	}	
 }
