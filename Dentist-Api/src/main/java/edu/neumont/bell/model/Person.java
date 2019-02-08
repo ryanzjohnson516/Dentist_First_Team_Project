@@ -6,7 +6,7 @@ public class Person {
 	private String lastName;
 	private int uniqueId;
 	private String email;
-	private PhoneNumber phone;
+	private long phoneNumber;
 	
 	public String getFirstName() {
 		return firstName;
@@ -32,11 +32,11 @@ public class Person {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public PhoneNumber getPhone() {
-		return phone;
+	public long getPhone() {
+		return phoneNumber;
 	}
-	public void setPhone(PhoneNumber phone) {
-		this.phone = phone;
+	public void setPhone(long phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 	
 	

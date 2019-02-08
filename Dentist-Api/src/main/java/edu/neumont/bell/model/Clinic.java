@@ -25,6 +25,7 @@ public class Clinic {
 	}
 	
 	public double getAccountBalance(int patientid) {
+		
 		return 0.0;
 	}
 	
