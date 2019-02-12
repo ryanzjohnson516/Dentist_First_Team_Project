@@ -10,6 +10,16 @@ public class PaymentCard {
 	private int cvv;
 	private String postalCode;
 	
+	public PaymentCard() {}
+	
+	public PaymentCard(long num, LocalDate ex, String na, int cv, String pc) {
+		this.setNumber(num);
+		this.setExpires(ex);
+		this.setName(na);
+		this.setCvv(cv);
+		this.setPostalCode(pc);
+	}
+	
 	public long getNumber() {
 		return number;
 	}

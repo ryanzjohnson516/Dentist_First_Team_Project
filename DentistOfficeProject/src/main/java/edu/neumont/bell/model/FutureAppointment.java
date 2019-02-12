@@ -8,6 +8,7 @@ public class FutureAppointment extends Appointment{
 	private List<Provider> providers;
 	private List<Procedure> procedures;
 	
+	
 	public Patient getPatient() {
 		return patient;
 	}

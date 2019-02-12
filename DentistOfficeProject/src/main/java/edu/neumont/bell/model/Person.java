@@ -8,6 +8,16 @@ public class Person {
 	private String email;
 	private PhoneNumber phone;
 	
+	public Person () {}
+	
+	public Person(String fn, String ln, int uid, String em, PhoneNumber pn) {
+		this.setFirstName(fn);
+		this.setLastName(ln);
+		this.setUniqueId(uid);
+		this.setEmail(em);
+		this.setPhone(pn);
+	}
+	
 	public String getFirstName() {
 		return firstName;
 	}

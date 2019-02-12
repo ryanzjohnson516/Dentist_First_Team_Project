@@ -8,6 +8,16 @@ public class ProcedureRecord {
 	private Procedure procedure;
 	private double cost;
 	
+	public ProcedureRecord() {};
+	
+	public ProcedureRecord(Patient pat, Provider pro, Appointment app, Procedure proc, double c) {
+		this.setPatient(pat);
+		this.setProvider(pro);
+		this.setAppointment(app);
+		this.setProcedure(proc);
+		this.setCost(c);
+	}
+	
 	public Patient getPatient() {
 		return patient;
 	}

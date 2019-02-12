@@ -6,6 +6,13 @@ public class Appointment {
 
 	private LocalDate datetime;
 	private int uniqueId;
+	
+	public Appointment() {}
+	
+	public Appointment(LocalDate dt, int uid) {
+		this.setDatetime(dt);
+		this.setUniqueId(uid);
+	}
 
 	public LocalDate getDatetime() {
 		return datetime;

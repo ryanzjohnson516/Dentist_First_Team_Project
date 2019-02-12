@@ -8,8 +8,10 @@ public class Payment {
 	
 	public Payment() {}
 	
-	public Payment(Patient p){
-		this.patient = p;
+	public Payment(double am, Patient p, boolean s){
+		this.setAmount(am);
+		this.setPatient(p);
+		this.setSource(s);
 	}
 	
 	public double getAmount() {
