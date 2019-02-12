@@ -5,4 +5,4 @@
  * @author Ryan
  *
  */
-package View;
+package edu.neumont.bell.View;

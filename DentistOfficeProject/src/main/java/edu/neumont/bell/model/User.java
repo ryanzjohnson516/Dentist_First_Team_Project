@@ -25,5 +25,13 @@ public class User {
 		this.role = role;
 	}
 	
+	public Boolean equalTo(User u) {
+		boolean equal = false;
+		if(username.equals(u.getUsername()) && password.equals(u.getPassword())) {
+			equal = true;
+		}
+		return equal;
+	}
+	
 	
 }
