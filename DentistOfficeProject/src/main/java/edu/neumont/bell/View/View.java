@@ -20,4 +20,12 @@ public class View {
 		}while(isSame);
 		return newPass;
 	}
+
+	public void out(String string) {
+		System.out.println(string);
+	}
+
+	public String getInput(String string, Boolean bol) {
+		return ConsoleIO.promptForInput(string, bol);
+	}
 }
