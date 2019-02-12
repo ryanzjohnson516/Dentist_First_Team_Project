@@ -6,7 +6,6 @@ public class Patient extends Person{
 
 	private InsuranceInfo insurance;
 	private PaymentCard paymentCard;
-	private List<Payment> myPayments;
 	
 	public InsuranceInfo getInsurance() {
 		return insurance;
@@ -20,9 +19,17 @@ public class Patient extends Person{
 	public void setPaymentCard(PaymentCard paymentCard) {
 		this.paymentCard = paymentCard;
 	}
-	public int getAccountBalance() {
+	public int getAccountBalance(List<Payment> payments, List<ProcedureRecord> procidures) {
+		int bal = 0;
+		for(Payment pay: payments) {
+			bal += pay.getAmount();
+		}
+		for(ProcedureRecord pro : procidures) {
+			bal -= pro.getCost();
+		}
 		
-		return 0;
+		return bal;
 	}
+	
 	
 }
