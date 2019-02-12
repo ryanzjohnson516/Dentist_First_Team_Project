@@ -6,6 +6,12 @@ public class Payment {
 	private Patient patient;
 	private boolean source;
 	
+	public Payment() {}
+	
+	public Payment(Patient p){
+		this.patient = p;
+	}
+	
 	public double getAmount() {
 		return amount;
 	}

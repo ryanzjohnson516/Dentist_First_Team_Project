@@ -1,9 +1,12 @@
 package edu.neumont.bell.model;
 
+import java.util.List;
+
 public class Patient extends Person{
 
 	private InsuranceInfo insurance;
 	private PaymentCard paymentCard;
+	private List<Payment> myPayments;
 	
 	public InsuranceInfo getInsurance() {
 		return insurance;
@@ -16,6 +19,10 @@ public class Patient extends Person{
 	}
 	public void setPaymentCard(PaymentCard paymentCard) {
 		this.paymentCard = paymentCard;
+	}
+	public int getAccountBalance() {
+		
+		return 0;
 	}
 	
 }
