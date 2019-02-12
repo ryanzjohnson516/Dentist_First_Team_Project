@@ -16,7 +16,7 @@ public class StandardUser extends User{
 		
 		switch(choice) {
 		case 1:
-			viewStandard(current);
+			view(current);
 			break;
 		case 2:
 			editStandard(current);
@@ -35,9 +35,5 @@ public class StandardUser extends User{
 			current.setPassword(view.getInput("Please enter the new password: ", false));
 			break;
 		}
-	}
-	
-	private void viewStandard(User current) {
-		view.out("Username: " + current.getUsername() + "\nPassword: " + current.getPassword() + "\nRole: " + current.getRole());
 	}
 }

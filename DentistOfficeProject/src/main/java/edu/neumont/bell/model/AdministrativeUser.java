@@ -1,6 +1,7 @@
 package edu.neumont.bell.model;
 
 import edu.neumont.bell.Controller.Controller;
+import edu.neumont.bell.View.View;
 
 public class AdministrativeUser extends User{
 	
@@ -30,4 +31,6 @@ public class AdministrativeUser extends User{
 	public void changeRole(User user, UserRole role) {
 		user.setRole(role);
 	}
+	
+	
 }

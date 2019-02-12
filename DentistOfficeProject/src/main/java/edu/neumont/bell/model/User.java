@@ -1,7 +1,11 @@
 package edu.neumont.bell.model;
 
+import edu.neumont.bell.View.View;
+
 public class User {
 
+	private View view = new View();
+	
 	private String username;
 	private String password;
 	private UserRole role;
@@ -41,5 +45,7 @@ public class User {
 		return equal;
 	}
 	
-	
+	public void view(User current) {
+		view.out("Username: " + current.getUsername() + "\nPassword: " + current.getPassword() + "\nRole: " + current.getRole());
+	}
 }

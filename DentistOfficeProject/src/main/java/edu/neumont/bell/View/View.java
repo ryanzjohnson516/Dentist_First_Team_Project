@@ -28,4 +28,8 @@ public class View {
 	public String getInput(String string, Boolean bol) {
 		return ConsoleIO.promptForInput(string, bol);
 	}
+
+	public boolean getBool(String string) {
+		return ConsoleIO.promptForBool(string, "y", "n");
+	}
 }
