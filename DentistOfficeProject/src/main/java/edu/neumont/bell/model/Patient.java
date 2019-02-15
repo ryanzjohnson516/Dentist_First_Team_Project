@@ -27,7 +27,7 @@ public class Patient extends Person{
 	public void setPaymentCard(PaymentCard paymentCard) {
 		this.paymentCard = paymentCard;
 	}
-	public int getAccountBalance(List<Payment> payments, List<ProcedureRecord> procidures) {
+	public int getAccountBalance(List<Payment> payments, List<ProcedureRecord> procedures) {
 		int bal = 0;
 		for(Payment pay: payments) {
 			bal += pay.getAmount();

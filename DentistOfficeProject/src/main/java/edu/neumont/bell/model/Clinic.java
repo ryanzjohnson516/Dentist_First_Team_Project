@@ -211,10 +211,10 @@ public class Clinic implements Serializable {
 		return pat;
 	}
 
-	public List<Appointment> searchAppointment(int something) {
+	public List<Appointment> searchAppointment(int id) {
 		List<Appointment> app = new ArrayList<>();
 		for (Appointment a : appointments) {
-			if (a.getUniqueId() == something) {
+			if (a.getUniqueId() == id) {
 				app.add(a);
 			}
 		}
@@ -252,7 +252,7 @@ public class Clinic implements Serializable {
 		}
 	}
 
-	public void createstandardUser() {
+	public void createStandardUser() {
 		String username = view.getInput("Please enter a username: ", false);
 		String password = view.getInput("Please enter a password: ", false);
 		User u = new User(username, password, UserRole.Standard);
