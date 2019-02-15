@@ -1,24 +1,24 @@
 package edu.neumont.bell.model;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 public class Appointment {
 
-	private LocalDate datetime;
+	private Date datetime;
 	private int uniqueId;
 	
 	public Appointment() {}
 	
-	public Appointment(LocalDate dt, int uid) {
-		this.setDatetime(dt);
+	public Appointment(Date date, int uid) {
+		this.setDatetime(date);
 		this.setUniqueId(uid);
 	}
 
-	public LocalDate getDatetime() {
+	public Date getDatetime() {
 		return datetime;
 	}
 
-	public void setDatetime(LocalDate datetime) {
+	public void setDatetime(Date datetime) {
 		this.datetime = datetime;
 	}
 

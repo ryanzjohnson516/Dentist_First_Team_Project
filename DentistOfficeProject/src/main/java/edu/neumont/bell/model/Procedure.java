@@ -6,6 +6,13 @@ public class Procedure {
 	private String descirption;
 	private double cost;
 	
+	public Procedure() {}
+	
+	public Procedure(String code2, String description, Double doub) {
+		this.setCode(code2);
+		this.setCost(doub);
+		this.setDescirption(description);
+	}
 	public String getCode() {
 		return code;
 	}
@@ -24,4 +31,5 @@ public class Procedure {
 	public void setCost(double cost) {
 		this.cost = cost;
 	}
+
 }

@@ -32,4 +32,8 @@ public class View {
 	public boolean getBool(String string) {
 		return ConsoleIO.promptForBool(string, "y", "n");
 	}
+
+	public Double getDouble(String string, boolean b) {
+		return ConsoleIO.promptForDouble(string, 0, 1000000000);
+	}
 }

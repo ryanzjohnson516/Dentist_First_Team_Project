@@ -2,6 +2,7 @@ package edu.neumont.bell.model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import edu.neumont.bell.View.View;
@@ -12,9 +13,10 @@ public class Clinic {
 	private List<Patient> patients = new ArrayList<>();
 	private List<Provider> providers = new ArrayList<>();
 	private List<Payment> payments = new ArrayList<>();
-	private List<ProcedureRecord> procidures = new ArrayList<>();
+	private List<ProcedureRecord> procidureRecords = new ArrayList<>();
+	private List<Procedure> procidures = new ArrayList<>();
 	private List<Appointment> appointments = new ArrayList<>();
-	private LocalDate now = LocalDate.now();
+	private Date now = new Date(2019,2,15);
 	private View view = new View();
 
 	public void run() {
@@ -53,11 +55,18 @@ public class Clinic {
 				if(u.getPassword().equals(ps) && u.getUsername().equals(un)){
 						u.view(u);
 						return;
+				}else {
+					view.out("No user was found under these credentials.");
 				}
 			}
 			break;
 		case 2:
-			// TODO Auto-generated method stub
+			String fn = view.getInput("Enter the first name: ", false);
+			String ln = view.getInput("Enter the last name: ", false);
+			List<Patient> p = searchPatient(fn, ln);
+			for(Patient pat : p) {
+			view.out("First name: " + pat.getFirstName() + "Last name: " + pat.getLastName() + "Email: " + pat.getEmail());
+			}
 			break;
 		case 3:
 			// TODO Auto-generated method stub
@@ -123,7 +132,7 @@ public class Clinic {
 	public List<Appointment> getFutureAppointments() {
 		List<Appointment> futureAppointments = new ArrayList<>();
 		for (Appointment i : appointments) {
-			if (i.getDatetime().isAfter(now)) {
+			if (i.getDatetime().after(now)) {
 				futureAppointments.add(i);
 			}
 		}
@@ -133,18 +142,18 @@ public class Clinic {
 	public List<Appointment> getPastAppointments() {
 		List<Appointment> pastAppointments = new ArrayList<>();
 		for (Appointment i : appointments) {
-			if (i.getDatetime().isBefore(now)) {
+			if (i.getDatetime().before(now)) {
 				pastAppointments.add(i);
 			}
 		}
 		return pastAppointments;
 	}
 
-	public Provider searchProvider(ProviderType something) {
-		Provider pro = new Provider();
+	public List<Provider> searchProvider(ProviderType something) {
+		List<Provider> pro = new ArrayList<>();
 		for (Provider p : providers) {
 			if (p.getTitle().equals(something)) {
-				pro = p;
+				pro.add(p);
 			}
 		}
 		return pro;
@@ -166,7 +175,7 @@ public class Clinic {
 
 	private List<ProcedureRecord> getMyProcidures(Patient p) {
 		List<ProcedureRecord> myProcedures = new ArrayList<>();
-		for (ProcedureRecord pro : procidures) {
+		for (ProcedureRecord pro : procidureRecords) {
 			if (pro.getPatient().equals(p)) {
 				myProcedures.add(pro);
 			}
@@ -174,22 +183,21 @@ public class Clinic {
 		return myProcedures;
 	}
 
-	public Patient searchPatient(int patientid) {
-		Patient pat = new Patient();
+	public List<Patient> searchPatient(String fn, String ln) {
+		List<Patient> pat = new ArrayList<>();
 		for (Patient p : patients) {
-			if (p.getUniqueId() == patientid) {
-				pat = p;
+			if (p.getFirstName().equals(fn) && p.getLastName().equals(ln)) {
+				pat.add(p);
 			}
 		}
 		return pat;
 	}
 
-	public Appointment searchAppointment(int something) {
-		Appointment app = new Appointment();
-		app = null;
+	public List<Appointment> searchAppointment(int something) {
+		List<Appointment> app = new ArrayList<>();
 		for (Appointment a : appointments) {
 			if (a.getUniqueId() == something) {
-				app = a;
+				app.add(a);
 			}
 		}
 		return app;
@@ -224,5 +232,39 @@ public class Clinic {
 				users.remove(u);
 			}
 		}
+	}
+	
+	private void createstandardUser() {
+		String username =view.getInput("Please enter a username: ", false);
+		String password = view.getInput("Please enter a password: ", false);
+		User u = new User(username,password,UserRole.Standard);
+		addUser(u);
+	}
+	
+	private void createAdminUser() {
+		String username =view.getInput("Please enter a username: ", false);
+		String password = view.getInput("Please enter a password: ", false);
+		User u = new User(username,password,UserRole.Administrative);
+		addUser(u);
+	}
+	
+	private void createAppointment() {
+		int day = view.askForInput("Please enter the day: ", 1, 31);
+		int month = view.askForInput("Please enter the month: ", 1, 12);
+		int year = view.askForInput("please enter the year: ", 2000, 2050);
+		Date date = new Date(day,month,year);
+		int uid = appointments.size() + 1;
+		Appointment app = new Appointment(date,uid);
+	}
+	
+	private void createProcedure() {
+		String code = view.getInput("Please enter the code: ", false);
+		String Description = view.getInput("Please enter a description: ", false);
+		Double doub = view.getDouble("Please enter the price: ", false);
+		Procedure proc = new Procedure(code, Description, doub);
+	}
+	
+	private void createPatient() {
+		
 	}
 }
