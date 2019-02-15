@@ -1,6 +1,10 @@
 package edu.neumont.bell.model;
 
-import java.time.LocalDate;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -94,13 +98,17 @@ public class Clinic {
 		}
 	}
 
-	private void loadClinic() {
-		// TODO Auto-generated method stub
-
+	private void loadClinic() throws IOException {
+		FileInputStream file = new FileInputStream("Clinic.txt");
+		ObjectInputStream in = new ObjectInputStream(file);
 	}
 
-	private void saveClinic() {
-		// TODO Auto-generated method stub
+	private void saveClinic() throws IOException {
+		FileOutputStream file = new FileOutputStream("Clinic.txt");
+		ObjectOutputStream out = new ObjectOutputStream(file);
+		out.writeObject(this.getClass());
+		out.close();
+		file.close();
 	}
 
 	private User login() {
