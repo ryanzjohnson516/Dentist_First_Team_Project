@@ -6,6 +6,13 @@ public class InsuranceInfo {
 	private String groupId;
 	private String memberID;
 	
+	public InsuranceInfo() {}
+	
+	public InsuranceInfo(String name, String groupID2, String memberID2) {
+		this.setCompanyName(name);
+		this.setGroupId(groupID2);
+		this.setMemberID(memberID2);
+	}
 	public String getCompanyName() {
 		return companyName;
 	}

@@ -248,23 +248,60 @@ public class Clinic {
 		addUser(u);
 	}
 	
-	private void createAppointment() {
+	private Appointment createAppointment() {
 		int day = view.askForInput("Please enter the day: ", 1, 31);
 		int month = view.askForInput("Please enter the month: ", 1, 12);
 		int year = view.askForInput("please enter the year: ", 2000, 2050);
 		Date date = new Date(day,month,year);
 		int uid = appointments.size() + 1;
 		Appointment app = new Appointment(date,uid);
+		return app;
 	}
 	
-	private void createProcedure() {
+	private Procedure createProcedure() {
 		String code = view.getInput("Please enter the code: ", false);
 		String Description = view.getInput("Please enter a description: ", false);
 		Double doub = view.getDouble("Please enter the price: ", false);
 		Procedure proc = new Procedure(code, Description, doub);
+		return proc;
+	}
+	
+	private Date createDate() {
+		int day = view.askForInput("Please enter the day: ", 1, 31);
+		int month = view.askForInput("Please enter the month: ", 1, 12);
+		int year = view.askForInput("please enter the year: ", 2000, 2050);
+		Date date = new Date(day,month,year);
+		return date;
+	}
+	
+	private PaymentCard createPaymentCard() {
+		Long l = view.getLong("Please enter the card number");
+		Date d = createDate();
+		String name = view.getInput("Please enter the name: ", false);
+		int cvv = view.askForInput("Please enter the cvv: ", 100, 999);
+		String pc = view.getInput("Please enter the postal code: ", false);
+		PaymentCard pay = new PaymentCard(l,d,name,cvv,pc);
+		return pay;
+		
+	}
+	
+	private InsuranceInfo createInsuranceInfo() {
+		String name = view.getInput("Please enter the insurance name: ", false);
+		String groupID = view.getInput("Please enter the group ID: ", false);
+		String memberID = view.getInput("Please enter the member ID: ", false);
+		InsuranceInfo ii = new InsuranceInfo(name,groupID,memberID);
+		return ii;
 	}
 	
 	private void createPatient() {
-		
+		String fn = view.getInput("Please enter the firstname: ", false);
+		String ln = view.getInput("Please enter the last name", false);
+		int uid = patients.size() + 1;
+		String email = view.getInput("Please enter the email: ", false);
+		String pn = view.getInput("Please enter the phone number: ", false);
+		InsuranceInfo ii = createInsuranceInfo();
+		PaymentCard pc = createPaymentCard();
+		Patient pat = new Patient(fn,ln,uid,email,pn,ii,pc);
+		patients.add(pat);
 	}
 }

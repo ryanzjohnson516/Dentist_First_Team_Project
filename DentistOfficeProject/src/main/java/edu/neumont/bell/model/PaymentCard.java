@@ -1,18 +1,19 @@
 package edu.neumont.bell.model;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 public class PaymentCard {
 
 	private long number;
-	private LocalDate expires;
+	private Date expires;
 	private String name;
 	private int cvv;
 	private String postalCode;
 	
 	public PaymentCard() {}
 	
-	public PaymentCard(long num, LocalDate ex, String na, int cv, String pc) {
+	public PaymentCard(long num, Date ex, String na, int cv, String pc) {
 		this.setNumber(num);
 		this.setExpires(ex);
 		this.setName(na);
@@ -26,10 +27,10 @@ public class PaymentCard {
 	public void setNumber(long number) {
 		this.number = number;
 	}
-	public LocalDate getExpires() {
+	public Date getExpires() {
 		return expires;
 	}
-	public void setExpires(LocalDate expires) {
+	public void setExpires(Date expires) {
 		this.expires = expires;
 	}
 	public String getName() {

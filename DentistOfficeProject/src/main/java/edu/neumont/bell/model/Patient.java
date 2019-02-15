@@ -9,7 +9,7 @@ public class Patient extends Person{
 	
 	public Patient() {}
 	
-	public Patient(String fn, String ln, int uid, String em, PhoneNumber pn, InsuranceInfo in, PaymentCard pc) {
+	public Patient(String fn, String ln, int uid, String em, String pn, InsuranceInfo in, PaymentCard pc) {
 		super(fn, ln, uid, em, pn);
 		this.setInsurance(in);
 		this.setPaymentCard(pc);

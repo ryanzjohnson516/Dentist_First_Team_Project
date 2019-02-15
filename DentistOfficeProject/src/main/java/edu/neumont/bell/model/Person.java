@@ -6,11 +6,11 @@ public class Person {
 	private String lastName;
 	private int uniqueId;
 	private String email;
-	private PhoneNumber phone;
+	private String phone;
 	
 	public Person () {}
 	
-	public Person(String fn, String ln, int uid, String em, PhoneNumber pn) {
+	public Person(String fn, String ln, int uid, String em, String pn) {
 		this.setFirstName(fn);
 		this.setLastName(ln);
 		this.setUniqueId(uid);
@@ -42,10 +42,11 @@ public class Person {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public PhoneNumber getPhone() {
+	public String getPhone() {
 		return phone;
 	}
-	public void setPhone(PhoneNumber phone) {
+	
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 	

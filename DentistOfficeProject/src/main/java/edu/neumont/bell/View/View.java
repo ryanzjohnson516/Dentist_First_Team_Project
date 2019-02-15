@@ -36,4 +36,8 @@ public class View {
 	public Double getDouble(String string, boolean b) {
 		return ConsoleIO.promptForDouble(string, 0, 1000000000);
 	}
+
+	public Long getLong(String string) {
+		return ConsoleIO.promptForLong(string, 0, 2140000000);
+	}
 }
