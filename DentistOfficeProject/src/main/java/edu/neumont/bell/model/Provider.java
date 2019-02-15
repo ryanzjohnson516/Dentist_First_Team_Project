@@ -4,6 +4,10 @@ public class Provider {
 
 	private ProviderType title;
 
+	public Provider(ProviderType pro) {
+		this.setTitle(pro);
+	}
+
 	public ProviderType getTitle() {
 		return title;
 	}

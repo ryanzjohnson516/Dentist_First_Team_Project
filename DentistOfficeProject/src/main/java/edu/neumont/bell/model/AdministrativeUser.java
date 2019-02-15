@@ -10,11 +10,6 @@ public class AdministrativeUser extends User{
 	public AdministrativeUser(String un, String pass, UserRole r) {
 		super(un, pass, r);
 	}
-	
-	public void runAdmin(int askForInput, User current) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	public void changePassword(User user, String password) {
 		user.setPassword(password);

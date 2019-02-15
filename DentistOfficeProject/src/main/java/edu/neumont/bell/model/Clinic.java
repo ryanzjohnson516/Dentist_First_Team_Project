@@ -1,8 +1,6 @@
 package edu.neumont.bell.model;
 
-
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -14,7 +12,7 @@ import java.util.List;
 
 import edu.neumont.bell.View.View;
 
-public class Clinic implements Serializable{
+public class Clinic implements Serializable {
 
 	private static final long serialversionUID = 1L;
 	private List<User> users = new ArrayList<>();
@@ -24,46 +22,52 @@ public class Clinic implements Serializable{
 	private List<ProcedureRecord> procidureRecords = new ArrayList<>();
 	private List<Procedure> procidures = new ArrayList<>();
 	private List<Appointment> appointments = new ArrayList<>();
-	private Date now = new Date(2019,2,15);
+	private Date now = new Date(2019, 2, 15);
 	private View view = new View();
 
 	public void run() throws IOException {
-		StandardUser su = new StandardUser();
-		AdministrativeUser au = new AdministrativeUser();
+		boolean wantsToRunClinic = true;
+		do {
+			StandardUser su = new StandardUser();
+			AdministrativeUser au = new AdministrativeUser();
 
-		loadClinic();
-		int choice = view.askForInput("Pick one:\n3. Tests\n2. Search\n3. Login\nEnter here: ", 1, 3);
-		if (choice == 1) {
-			tests();
-		}else if(choice == 2) {
-			search();
-		}else if(choice == 3){
-			User current = login();
-			if (!users.isEmpty()) {
-				changePass(current);
-			}
-			if (current instanceof AdministrativeUser) {
-				au.runAdmin(view.askForInput("", 1, 3), current);
+			//loadClinic();
+			int choice = view.askForInput("Pick one:\n3. Tests\n2. Search\n3. Login\nEnter here: ", 1, 3);
+			if (choice == 1) {
+				tests();
+			} else if (choice == 2) {
+				search();
+			} else if (choice == 3) {
+				User current = login();
+				if (!users.isEmpty()) {
+					changePass(current);
+				}
+				if (current instanceof AdministrativeUser) {
+					runAdmin(view.askForInput("", 1, 7), current);
+				} else {
+					runStandard(current);
+				}
 			} else {
-				su.runStandard(view.askForInput("Please chose one:\n1. View current information\n2. Edit information\nEnter here: ", 1, 2), current);
+				view.out("A problem happened in run, choice was not 1-3.");
 			}
-		}else {
-			view.out("A problem happened in run, choice was not 1-3.");
-		}
+		} while (wantsToRunClinic);
+		saveClinic();
 	}
 
 	private void search() {
-		int choice = view.askForInput("Pick one:\n1. Search Users \n2. Search Patients \n3. Search Providers\n4. Search Payments\n5. Search Procedures\n6. Search Appointments\nEnter here: ", 1, 6);
-		
-		switch(choice) {
+		int choice = view.askForInput(
+				"Pick one:\n1. Search Users \n2. Search Patients \n3. Search Providers\n4. Search Payments\n5. Search Procedures\n6. Search Appointments\nEnter here: ",
+				1, 6);
+
+		switch (choice) {
 		case 1:
 			String un = view.getInput("Username to search by: ", true);
 			String ps = view.getInput("Password to search by: ", true);
-			for(User u : users) {
-				if(u.getPassword().equals(ps) && u.getUsername().equals(un)){
-						u.view(u);
-						return;
-				}else {
+			for (User u : users) {
+				if (u.getPassword().equals(ps) && u.getUsername().equals(un)) {
+					u.view(u);
+					return;
+				} else {
 					view.out("No user was found under these credentials.");
 				}
 			}
@@ -73,8 +77,9 @@ public class Clinic implements Serializable{
 			String fn = view.getInput("Enter the first name: ", false);
 			String ln = view.getInput("Enter the last name: ", false);
 			List<Patient> p = searchPatient(fn, ln);
-			for(Patient pat : p) {
-			view.out("First name: " + pat.getFirstName() + "Last name: " + pat.getLastName() + "Email: " + pat.getEmail());
+			for (Patient pat : p) {
+				view.out("First name: " + pat.getFirstName() + "Last name: " + pat.getLastName() + "Email: "
+						+ pat.getEmail());
 			}
 			break;
 		case 3:
@@ -94,7 +99,7 @@ public class Clinic implements Serializable{
 
 	private void tests() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	private void changePass(User current) {
@@ -103,12 +108,10 @@ public class Clinic implements Serializable{
 		}
 	}
 
-
 	private void loadClinic() throws IOException {
 		FileInputStream file = new FileInputStream("Clinic.txt");
 		ObjectInputStream in = new ObjectInputStream(file);
 	}
-
 
 	private void saveClinic() throws IOException {
 		FileOutputStream file = new FileOutputStream("Clinic.txt");
@@ -248,67 +251,67 @@ public class Clinic implements Serializable{
 			}
 		}
 	}
-	
-	private void createstandardUser() {
-		String username =view.getInput("Please enter a username: ", false);
+
+	public void createstandardUser() {
+		String username = view.getInput("Please enter a username: ", false);
 		String password = view.getInput("Please enter a password: ", false);
-		User u = new User(username,password,UserRole.Standard);
+		User u = new User(username, password, UserRole.Standard);
 		addUser(u);
 	}
-	
-	private void createAdminUser() {
-		String username =view.getInput("Please enter a username: ", false);
+
+	public void createAdminUser() {
+		String username = view.getInput("Please enter a username: ", false);
 		String password = view.getInput("Please enter a password: ", false);
-		User u = new User(username,password,UserRole.Administrative);
+		User u = new User(username, password, UserRole.Administrative);
 		addUser(u);
 	}
-	
-	private Appointment createAppointment() {
+
+	public Appointment createAppointment() {
 		int day = view.askForInput("Please enter the day: ", 1, 31);
 		int month = view.askForInput("Please enter the month: ", 1, 12);
 		int year = view.askForInput("please enter the year: ", 2000, 2050);
-		Date date = new Date(day,month,year);
+		Date date = new Date(day, month, year);
 		int uid = appointments.size() + 1;
-		Appointment app = new Appointment(date,uid);
+		Appointment app = new Appointment(date, uid);
 		return app;
 	}
-	
-	private Procedure createProcedure() {
+
+	public Procedure createProcedure() {
 		String code = view.getInput("Please enter the code: ", false);
 		String Description = view.getInput("Please enter a description: ", false);
 		Double doub = view.getDouble("Please enter the price: ", false);
 		Procedure proc = new Procedure(code, Description, doub);
 		return proc;
 	}
-	
-	private Date createDate() {
+
+	public Date createDate() {
 		int day = view.askForInput("Please enter the day: ", 1, 31);
 		int month = view.askForInput("Please enter the month: ", 1, 12);
 		int year = view.askForInput("please enter the year: ", 2000, 2050);
-		Date date = new Date(day,month,year);
+		Date date = new Date(day, month, year);
 		return date;
 	}
-	
-	private PaymentCard createPaymentCard() {
+
+	public PaymentCard createPaymentCard() {
 		Long l = view.getLong("Please enter the card number");
 		Date d = createDate();
 		String name = view.getInput("Please enter the name: ", false);
 		int cvv = view.askForInput("Please enter the cvv: ", 100, 999);
 		String pc = view.getInput("Please enter the postal code: ", false);
-		PaymentCard pay = new PaymentCard(l,d,name,cvv,pc);
+		PaymentCard pay = new PaymentCard(l, d, name, cvv, pc);
 		return pay;
-		
+
 	}
-	
-	private InsuranceInfo createInsuranceInfo() {
+
+	public InsuranceInfo createInsuranceInfo() {
 		String name = view.getInput("Please enter the insurance name: ", false);
 		String groupID = view.getInput("Please enter the group ID: ", false);
 		String memberID = view.getInput("Please enter the member ID: ", false);
-		InsuranceInfo ii = new InsuranceInfo(name,groupID,memberID);
+		InsuranceInfo ii = new InsuranceInfo(name, groupID, memberID);
 		return ii;
 	}
-	
-	private void createPatient() {
+
+	public void createPatient() {
 		String fn = view.getInput("Please enter the firstname: ", false);
 		String ln = view.getInput("Please enter the last name", false);
 		int uid = patients.size() + 1;
@@ -316,7 +319,118 @@ public class Clinic implements Serializable{
 		String pn = view.getInput("Please enter the phone number: ", false);
 		InsuranceInfo ii = createInsuranceInfo();
 		PaymentCard pc = createPaymentCard();
-		Patient pat = new Patient(fn,ln,uid,email,pn,ii,pc);
+		Patient pat = new Patient(fn, ln, uid, email, pn, ii, pc);
 		patients.add(pat);
+	}
+	
+	private void createProvider() {
+		int choice = view.askForInput("Please pick the type of provider: \n1. Dentist\n2. Hygenist\n3. Assistant\n Enter Here: ", 1, 3);
+		ProviderType pt = null;
+		switch(choice) {
+		case 1:
+			pt = ProviderType.Dentist;
+			break;
+		case 2:
+			pt = ProviderType.Hygienist;
+			break;
+		case 3:
+			pt = ProviderType.Assistant;
+			break;
+		}
+		Provider pro = new Provider(pt);
+		providers.add(pro);
+	}
+
+	public void runStandard(User current) {
+		boolean wantsToContinue = true;
+		do {
+			int choice = view.askForInput(
+					"Please chose one:\n1. View current information\n2. Edit information\n3. Create Appointment\n4. Create Patient\n5. Create User\n6. Create Provider\n7. Create Procedure\n8. Exit\nEnter here: ",
+					1, 7);
+		switch (choice) {
+		case 1:
+			current.view(current);
+			break;
+		case 2:
+			editStandard(current);
+			break;
+		case 3:
+			Appointment app = createAppointment();
+			appointments.add(app);
+			break;
+		case 4:
+			createPatient();
+			break;
+		case 5:
+			createstandardUser();
+			break;
+		case 6:
+			createProvider();
+			break;
+		case 7:
+			Procedure pro = createProcedure();
+			procidures.add(pro);
+			break;
+		case 8:
+			wantsToContinue = false;
+			break;
+		}
+		}while(wantsToContinue);
+
+	}
+
+	private void editStandard(User current) {
+		int choice = view.askForInput("Please choise one;\n1. Change Username\2. Change Password\nEnter here: ", 1, 2);
+		switch (choice) {
+		case 1:
+			current.setUsername(view.getInput("Please enter the new username: ", false));
+			break;
+		case 2:
+			current.setPassword(view.getInput("Please enter the new password: ", false));
+			break;
+
+		}
+	}
+	
+	public void runAdmin(int choice, User current) {
+		boolean wantsToContinue = true;
+		do {
+		switch (choice) {
+		case 1:
+			current.view(current);
+			break;
+		case 2:
+			editStandard(current);
+			break;
+		case 3:
+			Appointment app = createAppointment();
+			appointments.add(app);
+			break;
+		case 4:
+			createPatient();
+			break;
+		case 5:
+			int input = view.askForInput("Would you like to create a standard or admin user?\n1. Admin\n2. Standard\nEnter here: ", 1, 2);
+			if(input == 1) {
+				createAdminUser();
+			}else {
+				createstandardUser();
+			}
+			
+			break;
+		case 6:
+			createProvider();
+			break;
+		case 7:
+			Procedure pro = createProcedure();
+			procidures.add(pro);
+			break;
+		case 8:
+			wantsToContinue = false;
+			break;
+		}
+		}while(wantsToContinue);
+
+		
 	}
 }
