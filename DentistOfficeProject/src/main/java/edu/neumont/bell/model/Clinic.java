@@ -23,7 +23,7 @@ public class Clinic {
 	private Date now = new Date(2019,2,15);
 	private View view = new View();
 
-	public void run() {
+	public void run() throws IOException {
 		StandardUser su = new StandardUser();
 		AdministrativeUser au = new AdministrativeUser();
 
