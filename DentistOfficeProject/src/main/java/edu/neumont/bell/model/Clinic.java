@@ -1,18 +1,22 @@
 package edu.neumont.bell.model;
 
+
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import edu.neumont.bell.View.View;
 
-public class Clinic {
+public class Clinic implements Serializable{
 
+	private static final long serialversionUID = 1L;
 	private List<User> users = new ArrayList<>();
 	private List<Patient> patients = new ArrayList<>();
 	private List<Provider> providers = new ArrayList<>();
@@ -49,7 +53,7 @@ public class Clinic {
 	}
 
 	private void search() {
-		int choice = view.askForInput("Pick one:\n1. Search users \n2. Search patients \n3. Search providers\n4. Search payments\n5. Search procidures\n6. search appointments\nEnter here: ", 1, 6);
+		int choice = view.askForInput("Pick one:\n1. Search Users \n2. Search Patients \n3. Search Providers\n4. Search Payments\n5. Search Procedures\n6. Search Appointments\nEnter here: ", 1, 6);
 		
 		switch(choice) {
 		case 1:
@@ -65,6 +69,7 @@ public class Clinic {
 			}
 			break;
 		case 2:
+
 			String fn = view.getInput("Enter the first name: ", false);
 			String ln = view.getInput("Enter the last name: ", false);
 			List<Patient> p = searchPatient(fn, ln);
@@ -98,10 +103,12 @@ public class Clinic {
 		}
 	}
 
+
 	private void loadClinic() throws IOException {
 		FileInputStream file = new FileInputStream("Clinic.txt");
 		ObjectInputStream in = new ObjectInputStream(file);
 	}
+
 
 	private void saveClinic() throws IOException {
 		FileOutputStream file = new FileOutputStream("Clinic.txt");
