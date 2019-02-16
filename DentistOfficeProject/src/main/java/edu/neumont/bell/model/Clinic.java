@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.sun.security.sasl.Provider;
+
 import edu.neumont.bell.View.View;
 
 public class Clinic implements Serializable {
@@ -23,7 +25,7 @@ public class Clinic implements Serializable {
 	private List<Procedure> procidures = new ArrayList<>();
 	private List<Appointment> appointments = new ArrayList<>();
 	private Date now = new Date(2019, 2, 15);
-	private View view = new View();
+	private javax.swing.text.View view = new View();
 
 	public void run() throws IOException {
 		boolean wantsToRunClinic = true;
@@ -32,7 +34,7 @@ public class Clinic implements Serializable {
 			AdministrativeUser au = new AdministrativeUser();
 
 			//loadClinic();
-			int choice = view.askForInput("Pick one:\n3. Tests\n2. Search\n3. Login\nEnter here: ", 1, 3);
+			int choice = view.askForInput("Pick one:\n1. Tests\n2. Search\n3. Login\nEnter here: ", 1, 3);
 			if (choice == 1) {
 				tests();
 			} else if (choice == 2) {
@@ -56,8 +58,8 @@ public class Clinic implements Serializable {
 
 	private void search() {
 		int choice = view.askForInput(
-				"Pick one:\n1. Search Users \n2. Search Patients \n3. Search Providers\n4. Search Payments\n5. Search Procedures\n6. Search Appointments\nEnter here: ",
-				1, 6);
+				"Pick one:\n1. Search Users \n2. Search Patients \n3. Search Providers\n4. Search Appointments\nEnter here: ",
+				1, 4);
 
 		switch (choice) {
 		case 1:
@@ -76,23 +78,30 @@ public class Clinic implements Serializable {
 
 			String fn = view.getInput("Enter the first name: ", false);
 			String ln = view.getInput("Enter the last name: ", false);
-			List<Patient> p = searchPatient(fn, ln);
-			for (Patient pat : p) {
-				view.out("First name: " + pat.getFirstName() + "Last name: " + pat.getLastName() + "Email: "
-						+ pat.getEmail());
-			}
+			List<Patient> pat = searchPatient(fn, ln);
+				
+			view.out(pat.toString());
 			break;
 		case 3:
-			// TODO Auto-generated method stub
+			int choice = view.askForInput("Enter Provider Type:\n1. Dentist\n2. Hygienist\n3. Assistant\nEnter here: ", 1, 3);
+			ProviderType pType;
+			if(choice == 1) {
+				pType = ProviderType.Dentist;
+			}
+			
+			else if(choice == 2) {
+				pType = ProviderType.Hygienist
+			} else {
+				pType = ProviderType.Assistant
+			}
+			
+			List<Provider> pro = searchProvider(pType);
+			view.out(pro.toString());
 			break;
 		case 4:
-			// TODO Auto-generated method stub
-			break;
-		case 5:
-			// TODO Auto-generated method stub
-			break;
-		case 6:
-			// TODO Auto-generated method stub
+			int id = view.getInt("Enter Appointment ID: ");
+			List<Appointment> app = searchAppointment(id);
+			view.out(app.toString());
 			break;
 		}
 	}
@@ -111,12 +120,15 @@ public class Clinic implements Serializable {
 	private void loadClinic() throws IOException {
 		FileInputStream file = new FileInputStream("Clinic.txt");
 		ObjectInputStream in = new ObjectInputStream(file);
+		Clinic loadedClinic = in.readObject();
+		in.close();
+		file.close();
 	}
 
 	private void saveClinic() throws IOException {
 		FileOutputStream file = new FileOutputStream("Clinic.txt");
 		ObjectOutputStream out = new ObjectOutputStream(file);
-		out.writeObject(this.getClass());
+		out.writeObject(this);
 		out.close();
 		file.close();
 	}
@@ -191,7 +203,7 @@ public class Clinic implements Serializable {
 		return bal;
 	}
 
-	private List<ProcedureRecord> getMyProcidures(Patient p) {
+	private List<ProcedureRecord> getMyProcedures(Patient p) {
 		List<ProcedureRecord> myProcedures = new ArrayList<>();
 		for (ProcedureRecord pro : procidureRecords) {
 			if (pro.getPatient().equals(p)) {

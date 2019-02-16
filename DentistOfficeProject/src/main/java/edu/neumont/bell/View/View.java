@@ -34,10 +34,14 @@ public class View {
 	}
 
 	public Double getDouble(String string, boolean b) {
-		return ConsoleIO.promptForDouble(string, 0, 1000000000);
+		return ConsoleIO.promptForDouble(string, 0, Double.MAX_VALUE);
 	}
 
 	public Long getLong(String string) {
-		return ConsoleIO.promptForLong(string, 0, 2140000000);
+		return ConsoleIO.promptForLong(string, 0, Long.MAX_VALUE);
+	}
+	
+	public int getInt(int Int) {
+		return ConsoleIO.promptForInt(String, 0, Integer.MAX_VALUE);
 	}
 }
