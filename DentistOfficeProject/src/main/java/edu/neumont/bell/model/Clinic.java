@@ -106,11 +106,6 @@ public class Clinic implements Serializable {
 		}
 	}
 
-	private void tests() {
-		// TODO Auto-generated method stub
-
-	}
-
 	private void changePass(User current) {
 		if (current.getPassword().equals("1234Password") && current.getUsername().equals("Administrator")) {
 			current.setPassword(view.getString(current.getPassword()));
