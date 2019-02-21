@@ -90,9 +90,9 @@ public class Clinic implements Serializable {
 			}
 			
 			else if(choice == 2) {
-				pType = ProviderType.Hygienist
+				pType = ProviderType.Hygienist;
 			} else {
-				pType = ProviderType.Assistant
+				pType = ProviderType.Assistant;
 			}
 			
 			List<Provider> pro = searchProvider(pType);
